@@ -2,9 +2,13 @@ package com.irede.java;
 
 import java.util.Scanner;
 
+import com.irede.java.controllers.TaskController;
+import com.irede.java.models.TaskModel;
+
 public class App 
 {
     static Scanner sc = new Scanner(System.in);
+    static TaskController taskController = new TaskController();
     public static void main( String[] args )
     {
         System.out.println("Bem vindo ao seu task manager:");
@@ -25,7 +29,7 @@ public class App
             switch (option) {
                 case 1 -> createTask();
                 case 2 -> getAllTasks();
-                case 3 -> getTaskByName();
+                case 3 -> getTaskByTitle();
                 case 4 -> finishTask();
                 case 0 -> { return; }
                 default -> { break; }
@@ -34,19 +38,28 @@ public class App
         }
     }
     private static void finishTask() {
+ 
+    }
+
+    private static void getTaskByTitle() {
+        System.out.println("Buscar tafera com titulo: ");
+        String title = sc.next();
+        TaskModel task = taskController.getTask(title);
+        System.out.println(task);
+    }
+
+    private static void getAllTasks() {
+        System.out.println("");
+    }
+    
+    private static void createTask() {
         System.out.println("Titulo da tarefa a ser criada: ");
         String title = sc.next();
         System.out.println("Insira uma descricao ta tarefa");
         String description = sc.next();
-                
-    }
-    private static void getTaskByName() {
 
-    }
-    private static void getAllTasks() {
+        TaskModel task = taskController.createTask(title, description);
 
-    }
-    private static void createTask() {
-
+        System.out.println("Tarefa " + task.toString() + " criada");
     }
 }

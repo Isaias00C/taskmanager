@@ -13,7 +13,7 @@ public class TaskModel{
 
     @Override
     public String toString() {
-        return "TaskModel [title=" + title + ", description=" + description + ", status=" + status + "]";
+        return "[titulo=" + title + ", descrição=" + description + ", status=" + status + "]";
     }
 
     public String getTitle() {

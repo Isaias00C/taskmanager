@@ -17,4 +17,14 @@ public class TaskRepository{
     public boolean deleteTask(TaskModel task){
         return repo.remove(task);
     }
+
+    public TaskModel findTaskByTitle(String title) {
+        for (TaskModel t : repo){
+            if(t.getTitle().equals(title)){
+                return t;
+            }
+        }
+
+        return null;
+    }
 }
