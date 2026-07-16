@@ -27,4 +27,8 @@ public class TaskRepository{
 
         return null;
     }
+
+    public ArrayList<TaskModel> getRepo() {
+        return repo;
+    }
 }
