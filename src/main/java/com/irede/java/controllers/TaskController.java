@@ -5,30 +5,30 @@ import java.util.ArrayList;
 import com.irede.java.exceptions.validators.InvalidTaskValidator;
 import com.irede.java.exceptions.validators.NullStatusValidator;
 import com.irede.java.exceptions.validators.TaskNotFoundValidator;
-import com.irede.java.models.TaskModel;
+import com.irede.java.models.Task;
 import com.irede.java.models.TaskStatus;
 import com.irede.java.repository.TaskRepository;
 
 public class TaskController{
     private TaskRepository repo = new TaskRepository();
 
-    public TaskModel createTask(String owner, String title, String description){
+    public Task createTask(String owner, String title, String description){
         InvalidTaskValidator.validate(title, description);
          
-        TaskModel newTask = new TaskModel(owner, title, description);
-        repo.addTaskOnDB(newTask);
+        Task newTask = new Task(owner, title, description);
+        repo.add(newTask);
 
         return newTask;
     }
     
     public void updateDescription(String title, String description){
-        TaskModel task = getTaskByTitle(title);
+        Task task = getTaskByTitle(title);
 
         task.setDescription(description);
     }
 
     public void updateStatus(String title, int option){
-        TaskModel task = getTaskByTitle(title);
+        Task task = getTaskByTitle(title);
         
         TaskStatus status = switch(option){
             case 1 -> TaskStatus.EM_ANDAMENTO ;
@@ -42,15 +42,15 @@ public class TaskController{
     }
 
     public void getAllTasks(){
-        ArrayList<TaskModel> _repo = repo.getRepo();
+        ArrayList<Task> _repo = repo.getRepo();
 
-        for (TaskModel t : _repo){
+        for (Task t : _repo){
             System.out.println(t.toString());
         }
     }
 
-    public TaskModel getTaskByTitle(String title){
-        TaskModel task = repo.findTaskByTitle(title);
+    public Task getTaskByTitle(String title){
+        Task task = repo.findTaskByTitle(title);
 
         TaskNotFoundValidator.validate(task);
 

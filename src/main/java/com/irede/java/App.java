@@ -3,7 +3,7 @@ package com.irede.java;
 import java.util.Scanner;
 
 import com.irede.java.controllers.TaskController;
-import com.irede.java.models.TaskModel;
+import com.irede.java.models.Task;
 
 public class App 
 {
@@ -85,7 +85,7 @@ public class App
         System.out.print("Buscar tarefa de título: ");
         String title = sc.nextLine();
 
-        TaskModel task = taskController.getTaskByTitle(title);
+        Task task = taskController.getTaskByTitle(title);
         System.out.println(task.toString());
     }
 
@@ -100,7 +100,7 @@ public class App
         System.out.print("Insira uma descrição para a tarefa: ");
         String description = sc.nextLine();
 
-        TaskModel task = taskController.createTask(name, title, description);
+        Task task = taskController.createTask(name, title, description);
 
         System.out.println("Tarefa " + task.toString() + " criada");
     }

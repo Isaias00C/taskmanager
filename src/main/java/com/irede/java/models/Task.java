@@ -1,12 +1,12 @@
 package com.irede.java.models;
 
-public class TaskModel{
+public class Task{
     private final String owner;
     private final String title;
     private String description;
     private TaskStatus status;
 
-    public TaskModel(String owner, String title, String description) {
+    public Task(String owner, String title, String description) {
         this.owner = owner;
         this.title = title;
         this.description = description;

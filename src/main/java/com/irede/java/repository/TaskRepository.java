@@ -1,25 +1,17 @@
 package com.irede.java.repository;
 
 import java.util.ArrayList;
-import com.irede.java.models.TaskModel;
+import com.irede.java.models.Task;
 
-public class TaskRepository{
-    private ArrayList<TaskModel> repo;
+public class TaskRepository implements Repository<Task>{
+    private ArrayList<Task> repo;
 
     public TaskRepository() {
-        this.repo = new ArrayList<TaskModel>();       
+        this.repo = new ArrayList<Task>();       
     }
 
-    public boolean addTaskOnDB(TaskModel task){
-        return repo.add(task);
-    }
-
-    public boolean deleteTask(TaskModel task){
-        return repo.remove(task);
-    }
-
-    public TaskModel findTaskByTitle(String title) {
-        for (TaskModel t : repo){
+    public Task findTaskByTitle(String title) {
+        for (Task t : repo){
             if(t.getTitle().equals(title)){
                 return t;
             }
@@ -28,7 +20,29 @@ public class TaskRepository{
         return null;
     }
 
-    public ArrayList<TaskModel> getRepo() {
+    public ArrayList<Task> getRepo() {
         return repo;
+    }
+
+    @Override
+    public void add(Task t) {
+        repo.add(t);
+    }
+
+    @Override
+    public Task getById(int id) {
+        return repo.get(id);
+    }
+
+    @Override
+    public Task delete(Task t) {
+        repo.remove(t);
+        return t;
+    }
+
+    @Override
+    public Task update(Task t) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 }
