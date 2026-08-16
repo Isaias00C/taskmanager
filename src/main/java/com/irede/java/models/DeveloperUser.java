@@ -1,11 +1,10 @@
 package com.irede.java.models;
 
-public class DeveloperUser implements User{
+public class DeveloperUser extends User{
 
     @Override
     public void status() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'status'");
+        
     }
 
     @Override

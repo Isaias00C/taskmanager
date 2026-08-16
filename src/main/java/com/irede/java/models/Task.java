@@ -1,10 +1,13 @@
 package com.irede.java.models;
 
+import java.util.List;
+
 public class Task{
     private final String owner;
     private final String title;
     private String description;
     private TaskStatus status;
+    private List<User> assignedUsers;
 
     public Task(String owner, String title, String description) {
         this.owner = owner;
@@ -41,4 +44,13 @@ public class Task{
     public void setStatus(TaskStatus status) {
         this.status = status;
     }
+
+    public void assignUser(User user){
+        assignedUsers.add(user);
+    }
+
+    public List<User> getAssignedUsers() {
+        return assignedUsers;
+    }
+    
 }

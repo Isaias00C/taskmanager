@@ -1,12 +1,12 @@
 package com.irede.java.models;
 
-import com.irede.java.repository.TaskRepository;
+import com.irede.java.controllers.TaskController;
 
-public class ProjectOwnerUser implements User{
-    private TaskRepository repo;
+public class ProjectOwnerUser extends User{
+    private TaskController controller;
 
-    ProjectOwnerUser(){
-        repo = new TaskRepository();
+    ProjectOwnerUser(String name, String email){
+        super(name, email);
     }
 
     @Override
@@ -14,12 +14,11 @@ public class ProjectOwnerUser implements User{
     }
 
     @Override
-    public Task getTasksById(int id) {
-        return repo.getById(id);
+    public void createTask() {
+        
     }
 
-    @Override
-    public void createTask() {
+    public void updateTaskStatus(){
         
     }
 
