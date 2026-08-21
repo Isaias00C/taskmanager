@@ -4,7 +4,7 @@ import com.irede.java.controllers.TaskController;
 
 public class ProjectOwnerUser extends User{
     private TaskController controller;
-
+    
     ProjectOwnerUser(String name, String email){
         super(name, email);
     }

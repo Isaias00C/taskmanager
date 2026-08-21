@@ -2,15 +2,14 @@ package com.irede.java.models;
 
 public class DeveloperUser extends User{
 
-    @Override
-    public void status() {
-        
+    DeveloperUser(String name, String email) {
+        super(name, email);
+        //TODO Auto-generated constructor stub
     }
 
     @Override
-    public Task getTasksById(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTasksById'");
+    public void status() {
+        
     }
 
     @Override
