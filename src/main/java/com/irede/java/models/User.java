@@ -2,26 +2,29 @@ package com.irede.java.models;
 
 import com.irede.java.utils.Role;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 public abstract class User {
-    private final String id;
-    private final String name;
+    private final SimpleIntegerProperty id;
+    private final SimpleStringProperty name;
     private final String email;
     private final String password;
     private final Role role;
 
-    protected User(String id, String name, String email, String password, Role role){
-        this.id = id;
-        this.name = name;
+    protected User(int id, String name, String email, String password, Role role){
+        this.id = new SimpleIntegerProperty(id);
+        this.name = new SimpleStringProperty(name);
         this.email = email;
         this.password = password;
         this.role = role;
 
     }
 
-    public String getId() {
+    public SimpleIntegerProperty getId() {
         return id;
     }
-    public String getName() {
+    public SimpleStringProperty getName() {
         return name;
     }
     public String getEmail() {
