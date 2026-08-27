@@ -2,7 +2,7 @@ package com.irede.java.models;
 
 import com.irede.java.utils.Role;
 
-public class DeveloperUser extends User{
+public class ProjectOwner extends User{
 
     private String id;
     private String name;
@@ -10,8 +10,8 @@ public class DeveloperUser extends User{
     private String password;
     private Role role;
 
-    public DeveloperUser(String id, String name, String email, String password, Role role) {
-        super(id, name, email, password, Role.DEVELOPER);
+    public ProjectOwner(String id, String name, String email, String password) {
+        super(id, name, email, password, Role.PROJECTOWNER);
     }
 
     @Override
