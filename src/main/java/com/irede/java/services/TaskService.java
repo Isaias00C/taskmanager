@@ -1,4 +1,4 @@
-package com.irede.java.controllers;
+package com.irede.java.services;
 
 import java.util.ArrayList;
 
@@ -9,7 +9,7 @@ import com.irede.java.models.Task;
 import com.irede.java.models.TaskStatus;
 import com.irede.java.repository.TaskRepository;
 
-public class TaskController{
+public class TaskService{
     private TaskRepository repo = new TaskRepository();
 
     public Task createTask(String owner, String title, String description){

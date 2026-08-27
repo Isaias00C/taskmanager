@@ -2,13 +2,13 @@ package com.irede.java;
 
 import java.util.Scanner;
 
-import com.irede.java.controllers.TaskController;
+import com.irede.java.services.TaskService;
 import com.irede.java.models.Task;
 
 public class App 
 {
     static Scanner sc = new Scanner(System.in);
-    static TaskController taskController = new TaskController();
+    static TaskService taskService = new TaskService();
     public static void main( String[] args )
     {
         System.out.println("------------Bem vindo ao seu task manager-----------");
@@ -67,7 +67,7 @@ public class App
     private static void updateDescriptionByTitle(String title) {
         System.out.println("Qual a nova descrição para a tarefa? ");
         String newDescription = sc.nextLine();
-        taskController.updateDescription(title, newDescription);
+        taskService.updateDescription(title, newDescription);
     }
 
     private static void updateStatusByTitle(String title) {
@@ -78,19 +78,19 @@ public class App
         int choice = sc.nextInt();
         sc.nextLine();
 
-        taskController.updateStatus(title, choice);
+        taskService.updateStatus(title, choice);
     }
 
     private static void getTaskByTitle() {
         System.out.print("Buscar tarefa de título: ");
         String title = sc.nextLine();
 
-        Task task = taskController.getTaskByTitle(title);
+        Task task = taskService.getTaskByTitle(title);
         System.out.println(task.toString());
     }
 
     private static void getAllTasks() {
-        taskController.getAllTasks();
+        taskService.getAllTasks();
     }
 
     private static void createTask(String name) {
@@ -100,7 +100,7 @@ public class App
         System.out.print("Insira uma descrição para a tarefa: ");
         String description = sc.nextLine();
 
-        Task task = taskController.createTask(name, title, description);
+        Task task = taskService.createTask(name, title, description);
 
         System.out.println("Tarefa " + task.toString() + " criada");
     }
