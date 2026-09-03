@@ -18,6 +18,9 @@
             <HBox>
                 <TextField fx:id="txtNome" promptText="informe seu nome"/>
                 <Button fx:id="btnAdicionar" text="adicionar" onAction="#adicionarNome"/>
+                <Button fx:id="btnAtualizar" text="atualizar"/>
+
+                
             </HBox>
         </VBox>
     </top>
