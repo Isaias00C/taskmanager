@@ -1,4 +1,4 @@
-package com.irede.java.controller;
+package com.irede.java.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;

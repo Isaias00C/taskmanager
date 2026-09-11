@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.irede.java.controller.PrimaryController"
+    fx:controller="com.irede.java.controllers.PrimaryController"
     prefHeight="400" prefWidth="500">
     <top>
         <VBox spacing="10">
