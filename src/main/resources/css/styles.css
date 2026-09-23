@@ -1,0 +1,46 @@
+.root {
+    -fx-background-color: #f0f2f5;
+    -fx-font-size: 14px;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 16, 0, 0, 4);
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2937;
+}
+
+.subtitle {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 13px;
+}
+
+.field-label {
+    -fx-text-fill: #374151;
+    -fx-font-weight: bold;
+    -fx-padding: 10 0 0 0;
+}
+
+.text-field, .password-field, .combo-box {
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-padding: 6 10 6 10;
+}
+
+.primary-button {
+    -fx-background-color: #3347e4;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-padding: 9 0 9 0;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: #2a3bc0;
+}
