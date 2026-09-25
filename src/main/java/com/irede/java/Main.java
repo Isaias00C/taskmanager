@@ -15,7 +15,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("SignInView"), 640, 480);
+        scene = new Scene(loadFXML("SignInView"));
         scene.getStylesheets().add(
                 getClass().getResource("/css/styles.css").toExternalForm()
         );
