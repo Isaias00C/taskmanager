@@ -1,13 +1,13 @@
 package com.irede.java.models;
 
 public class Task{
-    private final String owner;
+    private final String assignTo;
     private final String title;
     private String description;
     private TaskStatus status;
 
-    public Task(String owner, String title, String description) {
-        this.owner = owner;
+    public Task(String assignTo, String title, String description) {
+        this.assignTo = assignTo;
         this.title = title;
         this.description = description;
         this.status = TaskStatus.NAO_INICIADA;
@@ -15,11 +15,11 @@ public class Task{
 
     @Override
     public String toString() {
-        return "[Dono=" + owner + ", titulo=" + title + ", descrição=" + description + ", status=" + status + "]";
+        return "[Atribuido à=" + assignTo + ", titulo=" + title + ", descrição=" + description + ", status=" + status + "]";
     }
 
-    public String getOwner() {
-        return owner;
+    public String getassignTo() {
+        return assignTo;
     }
 
     public String getTitle() {
