@@ -3,9 +3,12 @@ package com.irede.java.controllers;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -15,6 +18,7 @@ public class POViewController {
     @FXML private Button addButton;
     @FXML private Button editButton;
     @FXML private Button deleteButton;
+    @FXML private Button exitButton;
     @FXML private TableView<?> taskTable; // troque <?> pela sua entidade Task
 
     private Node formNode;
@@ -85,5 +89,11 @@ public class POViewController {
     private void handleDeleteTask() { /* ... */ }
 
     @FXML
-    private void handleExit() { /* ... */ }
+    private void handleExit() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("com/irede/java/views/LoginView.fxml"));
+        Parent root = loader.load();
+
+        Stage stage = (Stage) exitButton.getScene().getWindow();
+        stage.setScene(new Scene(root));
+    }
 }
