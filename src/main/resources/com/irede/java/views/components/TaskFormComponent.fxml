@@ -20,7 +20,7 @@
     </columnConstraints>
 
     <Label text="Nome:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-    <TextField fx:id="txtName" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+    <TextField fx:id="txtTitle" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
     <Label text="Descrição:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
     <TextArea fx:id="txtDescription" prefRowCount="3" wrapText="true" GridPane.rowIndex="1" GridPane.columnIndex="1" />

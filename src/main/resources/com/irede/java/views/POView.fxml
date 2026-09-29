@@ -16,7 +16,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ComboBox?>
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/fxml/21"
-            fx:controller="com.irede.java.controllers.POViewController"
+            fx:controller="com.irede.java.controllers.POController"
             prefHeight="600.0" prefWidth="800.0">
 
     <top>
@@ -37,11 +37,12 @@
     </top>
 
     <center>
-        <TableView>
+        <TableView fx:id="taskTable">
             <columns>
-                <TableColumn fx:id="colId" text="ID" prefWidth="75" />
+                <TableColumn fx:id="colAssignTo" text="Atribuído À" prefWidth="75" />
                 <TableColumn fx:id="colTitle" text="Título" prefWidth="200" />
                 <TableColumn fx:id="colDescription" text="Descrição" prefWidth="300" />
+                <TableColumn fx:id="colStatus" text="Status" prefWidth="300" />
             </columns>
         </TableView>
     </center>

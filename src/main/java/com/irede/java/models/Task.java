@@ -1,44 +1,48 @@
 package com.irede.java.models;
 
+import javafx.beans.property.*;
+
 public class Task{
-    private final String assignTo;
-    private final String title;
-    private String description;
-    private TaskStatus status;
+    private final IntegerProperty id = new SimpleIntegerProperty();
+    private final StringProperty assignTo = new SimpleStringProperty();
+    private final StringProperty title = new SimpleStringProperty();
+    private final StringProperty description = new SimpleStringProperty();
+    private final ObjectProperty<TaskStatus> status = new SimpleObjectProperty<>(TaskStatus.NAO_INICIADA);
 
     public Task(String assignTo, String title, String description) {
-        this.assignTo = assignTo;
-        this.title = title;
-        this.description = description;
-        this.status = TaskStatus.NAO_INICIADA;
+        this.assignTo.set(assignTo);
+        this.title.set(title);
+        this.description.set(description);
     }
 
     @Override
     public String toString() {
-        return "[Atribuido à=" + assignTo + ", titulo=" + title + ", descrição=" + description + ", status=" + status + "]";
+        return "[Atribuido à=" + assignTo.get() + ", titulo=" + title.get() + ", descrição=" + description.get() + ", status=" + status.get() + "]";
     }
 
-    public String getassignTo() {
-        return assignTo;
+    public String getAssignTo() {
+        return assignTo.get();
     }
+    public StringProperty assignToProperty() { return assignTo; }
 
     public String getTitle() {
-        return title;
+        return title.get();
     }
+    public StringProperty titleProperty() { return title; }
 
     public String getDescription() {
-        return description;
+        return description.get();
     }
-
     public void setDescription(String description) {
-        this.description = description;
+        this.description.set(description);
     }
+    public StringProperty descriptionProperty() { return description; }
 
     public TaskStatus getStatus() {
-        return status;
+        return status.get();
     }
-
     public void setStatus(TaskStatus status) {
-        this.status = status;
+        this.status.set(status);
     }
+    public ObjectProperty<TaskStatus> statusProperty(){ return status; }
 }

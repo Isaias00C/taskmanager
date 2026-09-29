@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 
 public class TaskFormController {
 
-    @FXML private TextField txtName;
+    @FXML private TextField txtTitle;
     @FXML private TextArea txtDescription;
     @FXML private ComboBox<String> cmbAssignTo;
     @FXML private ComboBox<String> cmbStatus;
@@ -21,7 +21,7 @@ public class TaskFormController {
 
     @FXML
     public void initialize() {
-        cmbStatus.getItems().addAll("A Fazer", "Em Andamento", "Concluída");
+        cmbStatus.getItems().addAll("Não Iniciada", "Em Andamento", "Concluída");
         cmbAssignTo.getItems().addAll("Todos");
     }
 
@@ -34,8 +34,8 @@ public class TaskFormController {
     }
 
     /** Usado no modo edição: pré-preenche os campos com a task selecionada. */
-    public void preencher(String nome, String descricao, String status, String atribuido) {
-        txtName.setText(nome);
+    public void preencher(String title, String descricao, String status, String atribuido) {
+        txtTitle.setText(title);
         txtDescription.setText(descricao);
         cmbStatus.setValue(status);
         cmbAssignTo.setValue(atribuido);
@@ -44,13 +44,13 @@ public class TaskFormController {
 
     @FXML
     private void handleSave() {
-        if (txtName.getText() == null || txtName.getText().isBlank()) {
-            txtName.setStyle("-fx-border-color: red;");
+        if (txtTitle.getText() == null || txtTitle.getText().isBlank()) {
+            txtTitle.setStyle("-fx-border-color: red;");
             return;
         }
 
         TaskFormData dados = new TaskFormData(
-                txtName.getText(),
+                txtTitle.getText(),
                 txtDescription.getText(),
                 cmbStatus.getValue(),
                 cmbAssignTo.getValue()
@@ -64,5 +64,5 @@ public class TaskFormController {
         if (onCancel != null) onCancel.run();
     }
 
-    public record TaskFormData(String name, String description, String status, String urgency) {}
+    public record TaskFormData(String title, String description, String status, String assignTo) {}
 }

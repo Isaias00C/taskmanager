@@ -8,6 +8,7 @@ import com.irede.java.exceptions.validators.TaskNotFoundValidator;
 import com.irede.java.models.Task;
 import com.irede.java.models.TaskStatus;
 import com.irede.java.repository.TaskRepository;
+import com.mysql.cj.conf.StringProperty;
 
 public class TaskService{
     private TaskRepository repo = new TaskRepository();
