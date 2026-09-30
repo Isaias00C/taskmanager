@@ -23,6 +23,7 @@ public class Task{
     public String getAssignTo() {
         return assignTo.get();
     }
+    public void setAssignTo(String assignTo) { this.assignTo.set(assignTo); }
     public StringProperty assignToProperty() { return assignTo; }
 
     public String getTitle() {

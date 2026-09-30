@@ -13,10 +13,10 @@ import com.mysql.cj.conf.StringProperty;
 public class TaskService{
     private TaskRepository repo = new TaskRepository();
 
-    public Task createTask(String owner, String title, String description){
-        InvalidTaskValidator.validate(title, description);
+    public Task createTask(String assignTo, String title, String description){
+        InvalidTaskValidator.validate(assignTo, title, description);
          
-        Task newTask = new Task(owner, title, description);
+        Task newTask = new Task(assignTo, title, description);
         repo.add(newTask);
 
         return newTask;
@@ -39,6 +39,13 @@ public class TaskService{
 
         NullStatusValidator.validate(status);
 
+        task.setStatus(status);
+    }
+
+    public void updateTask(Task task, String assignTo, String description, TaskStatus status){
+        InvalidTaskValidator.validate(assignTo, task.getTitle(), description);
+        task.setAssignTo(assignTo);
+        task.setDescription(description);
         task.setStatus(status);
     }
 

@@ -1,5 +1,7 @@
 package com.irede.java.controllers;
 
+import com.irede.java.exceptions.InvalidTaskException;
+import com.irede.java.exceptions.validators.InvalidTaskValidator;
 import com.irede.java.models.Task;
 import com.irede.java.models.TaskStatus;
 import com.irede.java.services.TaskService;
@@ -10,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -27,7 +30,7 @@ public class POController {
     @FXML private Button deleteButton;
     @FXML private Button exitButton;
 
-    @FXML private TableView<Task> taskTable; // troque <?> pela sua entidade Task
+    @FXML private TableView<Task> taskTable;
     @FXML private TableColumn<Task, String> colAssignTo;
     @FXML private TableColumn<Task, String> colTitle;
     @FXML private TableColumn<Task, String> colDescription;
@@ -39,6 +42,8 @@ public class POController {
     private Node formNode;
     private TaskFormController formController;
     private final TaskService taskService = new TaskService();
+
+    private Task editingTask;
 
     @FXML
     public void initialize(){
@@ -55,7 +60,7 @@ public class POController {
         if (formNode != null) return;
 
         try {
-            abrirFormulario();
+            openForms(null);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -63,19 +68,30 @@ public class POController {
 
     @FXML
     private void handleEditTask() {
-        // Object selecionada = taskTable.getSelectionModel().getSelectedItem();
-        // if (selecionada == null) { /* mostrar alerta */ return; }
-        // abrirFormulario(selecionada);
+         Task selected = taskTable.getSelectionModel().getSelectedItem();
+         if (selected == null) {
+             if (selected == null){
+                 new Alert(Alert.AlertType.WARNING, "Selecione uma tarefa para editar").showAndWait();
+             }
+             return;
+         }
+         openForms(selected);
     }
 
-    private void abrirFormulario() {
+    private void openForms(Task task) {
         if (formNode != null) return; // evita abrir dois formulários simultâneos
+
 
         try {
             FXMLLoader loader = new FXMLLoader(
                     getClass().getResource("/com/irede/java/views/components/TaskFormComponent.fxml"));
             formNode = loader.load();
             formController = loader.getController();
+            editingTask = task;
+
+            if (task != null){
+                formController.preencher(task.getTitle(), task.getDescription(), task.getStatus().getLabel(), task.getAssignTo());
+            }
 
             formController.setOnSave(this::handleFormSalvar);
             formController.setOnCancel(this::fecharFormulario);
@@ -86,19 +102,30 @@ public class POController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     private void handleFormSalvar(TaskFormController.TaskFormData dados) {
         // TODO: persistir via seu DAO/service usando dados.name(), dados.description(),
         // dados.status(), dados.urgency(); depois dar refresh na TableView.
         try {
-            Task task = taskService.createTask(dados.assignTo(), dados.title(), dados.description());
-            tasks.add(task);
-        }catch (Exception e){
+            TaskStatus status = TaskStatus.fromLabel(dados.status());
+
+            if(editingTask == null){
+                Task task = taskService.createTask(dados.assignTo(), dados.title(), dados.description());
+                task.setStatus(status);
+                tasks.add(task);
+            }else {
+                taskService.updateTask(editingTask, dados.assignTo(), dados.description(), status);
+            }
+
+            fecharFormulario();
+            editingTask = null;
+        }catch (InvalidTaskException e){
+
             e.printStackTrace();
         }
 
-        fecharFormulario();
     }
 
     private void fecharFormulario() {
@@ -117,7 +144,12 @@ public class POController {
     }
 
     @FXML
-    private void handleDeleteTask() { /* ... */ }
+    private void handleDeleteTask() {
+        Task selected = taskTable.getSelectionModel().getSelectedItem();
+        if (selected != null){
+            tasks.remove(selected);
+        }
+    }
 
     @FXML
     private void handleExit() throws IOException {

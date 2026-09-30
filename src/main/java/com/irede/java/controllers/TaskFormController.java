@@ -33,9 +33,9 @@ public class TaskFormController {
         this.onCancel = onCancel;
     }
 
-    /** Usado no modo edição: pré-preenche os campos com a task selecionada. */
     public void preencher(String title, String descricao, String status, String atribuido) {
         txtTitle.setText(title);
+        txtTitle.setDisable(true);
         txtDescription.setText(descricao);
         cmbStatus.setValue(status);
         cmbAssignTo.setValue(atribuido);
