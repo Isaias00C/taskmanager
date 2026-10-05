@@ -9,9 +9,10 @@ public class ConectionFactory {
     private final String user = "";
     private final String password = "";
 
-//    public Connection conect() throws SQLException {
-//        // TODO: conexão com o banco de dados
-//
-//    }
+    public Connection conect() throws SQLException {
+        // TODO: conexão com o banco de dados
+
+
+    }
 
 }
