@@ -12,7 +12,7 @@ public class DeveloperUser extends User{
     private String password;
     private Role role;
 
-    public DeveloperUser(int id, String name, String email, String password, Role role) {
+    public DeveloperUser(int id, String name, String email, String password) {
         super(id, name, email, password, Role.DEVELOPER);
     }
 

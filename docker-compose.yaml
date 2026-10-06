@@ -1,5 +1,5 @@
 services:
-  mysql:
+  db:
     image: mysql:8.4
     container_name: taskmanager
     restart: unless-stopped
@@ -12,8 +12,9 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./src/main/resources/db/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot123"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-padmin123"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -25,7 +26,7 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - mysql
+      - db
 
 volumes:
   mysql_data:

@@ -1,7 +1,10 @@
 package com.irede.java;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 
+import com.irede.java.config.ConnectionFactory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
