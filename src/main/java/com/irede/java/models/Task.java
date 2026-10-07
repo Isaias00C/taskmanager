@@ -4,12 +4,12 @@ import javafx.beans.property.*;
 
 public class Task{
     private final IntegerProperty id = new SimpleIntegerProperty();
-    private final StringProperty assignTo = new SimpleStringProperty();
+    private final IntegerProperty assignTo = new SimpleIntegerProperty();
     private final StringProperty title = new SimpleStringProperty();
     private final StringProperty description = new SimpleStringProperty();
     private final ObjectProperty<TaskStatus> status = new SimpleObjectProperty<>(TaskStatus.NAO_INICIADA);
 
-    public Task(String assignTo, String title, String description) {
+    public Task(int assignTo, String title, String description) {
         this.assignTo.set(assignTo);
         this.title.set(title);
         this.description.set(description);
@@ -20,11 +20,11 @@ public class Task{
         return "[Atribuido à=" + assignTo.get() + ", titulo=" + title.get() + ", descrição=" + description.get() + ", status=" + status.get() + "]";
     }
 
-    public String getAssignTo() {
+    public int getAssignTo() {
         return assignTo.get();
     }
-    public void setAssignTo(String assignTo) { this.assignTo.set(assignTo); }
-    public StringProperty assignToProperty() { return assignTo; }
+    public void setAssignTo(int assignTo) { this.assignTo.set(assignTo); }
+    public IntegerProperty assignToProperty() { return assignTo; }
 
     public String getTitle() {
         return title.get();
@@ -46,4 +46,12 @@ public class Task{
         this.status.set(status);
     }
     public ObjectProperty<TaskStatus> statusProperty(){ return status; }
+
+    public int getId() {
+        return id.get();
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
 }

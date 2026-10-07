@@ -1,5 +1,6 @@
 package com.irede.java.controllers;
 
+import com.irede.java.services.TaskService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -9,6 +10,8 @@ import javafx.scene.control.TextField;
 import java.util.function.Consumer;
 
 public class TaskFormController {
+
+    TaskService taskService = new TaskService();
 
     @FXML private TextField txtTitle;
     @FXML private TextArea txtDescription;
@@ -64,5 +67,5 @@ public class TaskFormController {
         if (onCancel != null) onCancel.run();
     }
 
-    public record TaskFormData(String title, String description, String status, String assignTo) {}
+    public record TaskFormData(String title, String description, String status, int assignTo) {}
 }

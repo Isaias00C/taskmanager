@@ -13,6 +13,30 @@ import java.sql.SQLException;
 
 public class UserRepository implements Repository<User>{
 
+    public User getByName(String name){
+        String sql = "SELECT * FROM user WHERE user.name=?";
+        try (Connection conn = ConnectionFactory.conect(); PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1, name);
+            try (ResultSet rs = stmt.executeQuery()){
+                if (!rs.next()) { return null; }
+
+                Role role = Role.valueOf(rs.getString("role"));
+                int uid = rs.getInt("id");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+
+                return switch(role){
+                    case DEVELOPER -> new DeveloperUser(uid, name, email, password);
+                    case PROJECTOWNER -> new ProjectOwner(uid, name, email, password);
+                };
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return null;
+    }
+
     @Override
     public User getById(int id) {
         String sql = "SELECT * FROM user WHERE user.id=?";
