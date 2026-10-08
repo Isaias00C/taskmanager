@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class Scratch {
     public static void main(String[] args) {
-        try (Connection conn = ConnectionFactory.conect()){
+        try (Connection conn = ConnectionFactory.connect()){
             System.out.println("Conectou: " + !conn.isClosed());
         } catch (SQLException e) {
             throw new RuntimeException(e);

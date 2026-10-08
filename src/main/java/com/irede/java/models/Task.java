@@ -47,6 +47,7 @@ public class Task{
     }
     public ObjectProperty<TaskStatus> statusProperty(){ return status; }
 
+    public void setId(int id) { this.id.set(id);}
     public int getId() {
         return id.get();
     }

@@ -10,7 +10,7 @@ public class ConnectionFactory {
     private static final String user = "admin";
     private static final String password = "admin";
 
-    public static Connection conect() throws SQLException {
+    public static Connection connect() throws SQLException {
         return DriverManager.getConnection(url, user, password);
     }
 

@@ -55,18 +55,16 @@ public abstract class User {
         return role.get();
     }
 
+    public void setId(int id) { this.id.set(id); }
     public void setName(String name) {
         this.name.set(name);
     }
-
     public void setEmail(String email) {
         this.email.set(email);
     }
-
     public void setPassword(String password) {
         this.password.set(password);
     }
-
     public void setRole(Role role) {
         this.role.set(role);
     }
