@@ -6,6 +6,7 @@ import com.irede.java.models.ProjectOwner;
 import com.irede.java.models.User;
 import com.irede.java.utils.Role;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,7 +35,6 @@ public class UserRepository implements Repository<User>{
             throw new RuntimeException(e);
         }
 
-        return null;
     }
 
     @Override
@@ -64,8 +64,20 @@ public class UserRepository implements Repository<User>{
 
     @Override
     public User delete(User t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        int id = t.getId();
+        String sql = "SELECT * FROM user WHERE user.id=?";
+
+        try (Connection conn = ConnectionFactory.conect(); PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setInt(1, id);
+
+            int affectedRows = stmt.executeUpdate();
+
+            return affectedRows>0 ? t : null;
+
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
