@@ -6,8 +6,9 @@ import com.irede.java.models.ProjectOwner;
 import com.irede.java.models.User;
 import com.irede.java.utils.Role;
 
-import javax.xml.transform.Result;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserRepository implements Repository<User>{
 
@@ -23,6 +24,18 @@ public class UserRepository implements Repository<User>{
             throw new RuntimeException(e);
         }
 
+    }
+
+    public List<User> findAll() {
+        String sql = "SELECT * FROM user ORDER BY name";
+        List<User> users = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.connect(); PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) users.add(map(rs));
+            return users;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

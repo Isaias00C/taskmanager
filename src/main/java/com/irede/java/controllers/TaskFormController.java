@@ -1,6 +1,6 @@
 package com.irede.java.controllers;
 
-import com.irede.java.services.TaskService;
+import com.irede.java.services.UserService;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 
 public class TaskFormController {
 
-    TaskService taskService = new TaskService();
+    private final UserService userService = new UserService();
 
     @FXML private TextField txtTitle;
     @FXML private TextArea txtDescription;
@@ -25,7 +25,8 @@ public class TaskFormController {
     @FXML
     public void initialize() {
         cmbStatus.getItems().addAll("Não Iniciada", "Em Andamento", "Concluída");
-        cmbAssignTo.getItems().addAll("Todos");
+        cmbAssignTo.getItems().addAll(userService.getAllNames());
+        cmbAssignTo.setValue(UserService.ALL);
     }
 
     public void setOnSave(Consumer<TaskFormData> onSave) {
@@ -56,7 +57,7 @@ public class TaskFormController {
                 txtTitle.getText(),
                 txtDescription.getText(),
                 cmbStatus.getValue(),
-                cmbAssignTo.getValue()
+                userService.getIdByName(cmbAssignTo.getValue())
         );
 
         if (onSave != null) onSave.accept(dados);
@@ -67,5 +68,5 @@ public class TaskFormController {
         if (onCancel != null) onCancel.run();
     }
 
-    public record TaskFormData(String title, String description, String status, int assignTo) {}
+    public record TaskFormData(String title, String description, String status, Integer assignTo) {}
 }

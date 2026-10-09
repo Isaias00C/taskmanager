@@ -5,6 +5,7 @@ import com.irede.java.exceptions.validators.InvalidTaskValidator;
 import com.irede.java.models.Task;
 import com.irede.java.models.TaskStatus;
 import com.irede.java.services.TaskService;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -47,11 +48,12 @@ public class POController {
 
     @FXML
     public void initialize(){
-        colAssignTo.setCellValueFactory(new PropertyValueFactory<>("assignTo"));
+        colAssignTo.setCellValueFactory(cell -> new ReadOnlyStringWrapper(taskService.getAssignTo(cell.getValue())));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
+        tasks.addAll(taskService.getAllTasks());
         taskTable.setItems(tasks);
     }
 
@@ -90,7 +92,7 @@ public class POController {
             editingTask = task;
 
             if (task != null){
-                formController.preencher(task.getTitle(), task.getDescription(), task.getStatus().getLabel(), task.getAssignTo());
+                formController.preencher(taskService.getTitle(task), taskService.getDescription(task), taskService.getStatus(task), taskService.getAssignTo(task));
             }
 
             formController.setOnSave(this::handleFormSalvar);
@@ -113,10 +115,11 @@ public class POController {
 
             if(editingTask == null){
                 Task task = taskService.createTask(dados.assignTo(), dados.title(), dados.description());
-                task.setStatus(status);
+                taskService.updateTask(task, dados.assignTo(), dados.description(), status);
                 tasks.add(task);
             }else {
                 taskService.updateTask(editingTask, dados.assignTo(), dados.description(), status);
+                taskTable.refresh();
             }
 
             fecharFormulario();
