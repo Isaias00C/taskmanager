@@ -100,7 +100,7 @@ public class App
         System.out.print("Insira uma descrição para a tarefa: ");
         String description = sc.nextLine();
 
-        Task task = taskService.createTask(name, title, description);
+        Task task = taskService.createTask(null, title, description);
 
         System.out.println("Tarefa " + task.toString() + " criada");
     }

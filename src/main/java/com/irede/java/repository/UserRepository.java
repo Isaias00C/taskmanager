@@ -6,30 +6,19 @@ import com.irede.java.models.ProjectOwner;
 import com.irede.java.models.User;
 import com.irede.java.utils.Role;
 
-import javax.xml.transform.Result;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserRepository implements Repository<User>{
 
     public User getByName(String name){
         String sql = "SELECT * FROM user WHERE user.name=?";
-        try (Connection conn = ConnectionFactory.conect(); PreparedStatement stmt = conn.prepareStatement(sql)){
+        try (Connection conn = ConnectionFactory.connect(); PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setString(1, name);
             try (ResultSet rs = stmt.executeQuery()){
-                if (!rs.next()) { return null; }
+                return rs.next() ? map(rs) : null;
 
-                Role role = Role.valueOf(rs.getString("role"));
-                int uid = rs.getInt("id");
-                String email = rs.getString("email");
-                String password = rs.getString("password");
-
-                return switch(role){
-                    case DEVELOPER -> new DeveloperUser(uid, name, email, password);
-                    case PROJECTOWNER -> new ProjectOwner(uid, name, email, password);
-                };
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -37,24 +26,39 @@ public class UserRepository implements Repository<User>{
 
     }
 
+    public User findByEmail(String email) {
+        String sql = "SELECT * FROM user WHERE user.email=?";
+        try (Connection conn = ConnectionFactory.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() ? map(rs) : null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<User> findAll() {
+        String sql = "SELECT * FROM user ORDER BY name";
+        List<User> users = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.connect(); PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) users.add(map(rs));
+            return users;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public User getById(int id) {
         String sql = "SELECT * FROM user WHERE user.id=?";
-        try (Connection conn = ConnectionFactory.conect(); PreparedStatement stmt = conn.prepareStatement(sql)){
+        try (Connection conn = ConnectionFactory.connect(); PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setInt(1, id);
-            try (ResultSet response = stmt.executeQuery()){
-                if ( !response.next() ) return null;
+            try (ResultSet rs = stmt.executeQuery()){
 
-                Role role = Role.valueOf(response.getString("role"));
-                int uid = response.getInt("id");
-                String name = response.getString("name");
-                String email = response.getString("email");
-                String password = response.getString("password");
+                return rs.next() ? map(rs) : null;
 
-                return switch(role){
-                    case DEVELOPER -> new DeveloperUser(uid, name, email, password);
-                    case PROJECTOWNER -> new ProjectOwner(uid, name, email, password);
-                };
             }
 
         } catch (SQLException e) {
@@ -65,9 +69,9 @@ public class UserRepository implements Repository<User>{
     @Override
     public User delete(User t) {
         int id = t.getId();
-        String sql = "SELECT * FROM user WHERE user.id=?";
+        String sql = "DELETE FROM user WHERE user.id=?";
 
-        try (Connection conn = ConnectionFactory.conect(); PreparedStatement stmt = conn.prepareStatement(sql)){
+        try (Connection conn = ConnectionFactory.connect(); PreparedStatement stmt = conn.prepareStatement(sql)){
             stmt.setInt(1, id);
 
             int affectedRows = stmt.executeUpdate();
@@ -75,8 +79,7 @@ public class UserRepository implements Repository<User>{
             return affectedRows>0 ? t : null;
 
         }catch (SQLException e){
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
@@ -90,15 +93,34 @@ public class UserRepository implements Repository<User>{
     public void add(User user){
         String sql = "INSERT INTO user (name, email, password, role) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = ConnectionFactory.conect(); PreparedStatement stmt = conn.prepareStatement(sql)){
+        try (Connection conn = ConnectionFactory.connect(); PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPassword());
             stmt.setString(4, String.valueOf(user.getRole()));
 
             stmt.executeUpdate();
+
+            try (ResultSet keys = stmt.getGeneratedKeys()) {
+                if (keys.next()) {
+                    user.setId(keys.getInt(1));
+                }
+            }
         }catch (SQLException e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+    }
+
+    private User map(ResultSet rs) throws SQLException {
+        int id = rs.getInt("id");
+        String name = rs.getString("name");
+        String email = rs.getString("email");
+        String password = rs.getString("password");
+        Role role = Role.valueOf(rs.getString("role"));
+
+        return switch (role){
+            case PROJECTOWNER -> new ProjectOwner(id, name, email, password);
+            case DEVELOPER -> new DeveloperUser(id, name, email, password);
+        };
     }
 }
