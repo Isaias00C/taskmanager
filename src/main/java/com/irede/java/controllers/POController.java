@@ -1,5 +1,6 @@
 package com.irede.java.controllers;
 
+import com.irede.java.Main;
 import com.irede.java.exceptions.InvalidTaskException;
 import com.irede.java.exceptions.validators.InvalidTaskValidator;
 import com.irede.java.models.Task;
@@ -156,10 +157,6 @@ public class POController {
 
     @FXML
     private void handleExit() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/irede/java/views/LoginView.fxml"));
-        Parent root = loader.load();
-
-        Stage stage = (Stage) exitButton.getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Main.setRoot("LoginView");
     }
 }

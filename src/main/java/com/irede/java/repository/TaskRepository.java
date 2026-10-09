@@ -106,6 +106,21 @@ public class TaskRepository implements Repository<Task>{
         }
     }
 
+    public List<Task> findByAssignTo(int userId) {
+        String sql = "SELECT * FROM task WHERE assign_to=? OR assign_to IS NULL ORDER BY id";
+        List<Task> tasks = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) tasks.add(map(rs));
+            }
+            return tasks;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void setAssignTo(PreparedStatement stmt, int index, Integer assignTo) throws SQLException {
         if (assignTo == null) stmt.setNull(index, Types.INTEGER);
         else stmt.setInt(index, assignTo);

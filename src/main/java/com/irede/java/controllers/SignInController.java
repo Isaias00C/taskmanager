@@ -1,13 +1,16 @@
 package com.irede.java.controllers;
 
+import com.irede.java.Main;
 import java.io.IOException;
 
-import com.irede.java.Main;
+import com.irede.java.exceptions.AuthException;
+import com.irede.java.services.UserService;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
@@ -23,22 +26,26 @@ public class SignInController {
     @FXML private ComboBox<String> cargoCombo;
     @FXML private Hyperlink linkLogin;
 
+    private final UserService userService = new UserService();
+
     @FXML
     public void onSignIn(){
         try {
-            Main.setRoot("po-view");
-        } catch (IOException e) {
+            userService.register(nomeField.getText(), emailField.getText(), senhaField.getText(),
+                    confirmaSenhaField.getText(), cargoCombo.getValue());
+            new Alert(Alert.AlertType.INFORMATION, "Cadastro realizado! Faça login para continuar.").showAndWait();
+            onGoToLogin();
+        } catch (AuthException e) {
+            new Alert(Alert.AlertType.WARNING, e.getMessage()).showAndWait();
+        } catch (IOException | RuntimeException e) {
             e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Não foi possível cadastrar. Verifique a conexão com o banco.").showAndWait();
         }
     }
 
     @FXML
     private void onGoToLogin() throws IOException{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/irede/java/views/LoginView.fxml"));
-        Parent root = loader.load();
-
-        Stage stage = (Stage) linkLogin.getScene().getWindow();
-        stage.setScene(new Scene(root));
+        Main.setRoot("LoginView");
 
     }
 }

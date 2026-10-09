@@ -46,6 +46,11 @@ public class TaskFormController {
         btnSave.setText("Atualizar");
     }
 
+    /** Impede trocar o responsável (usado na visão do desenvolvedor). */
+    public void bloquearResponsavel() {
+        cmbAssignTo.setDisable(true);
+    }
+
     @FXML
     private void handleSave() {
         if (txtTitle.getText() == null || txtTitle.getText().isBlank()) {

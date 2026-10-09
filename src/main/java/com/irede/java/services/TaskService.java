@@ -70,6 +70,10 @@ public class TaskService{
 
     public String getStatus(Task t){ return t.getStatus().getLabel(); }
 
+    public List<Task> getTasksByUser(int userId){
+        return repo.findByAssignTo(userId);
+    }
+
     public String getAssignTo(Task t) {
         return userService.getName(t.getAssignTo());
     }

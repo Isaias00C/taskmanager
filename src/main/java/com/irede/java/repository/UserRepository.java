@@ -26,6 +26,18 @@ public class UserRepository implements Repository<User>{
 
     }
 
+    public User findByEmail(String email) {
+        String sql = "SELECT * FROM user WHERE user.email=?";
+        try (Connection conn = ConnectionFactory.connect(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, email);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next() ? map(rs) : null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<User> findAll() {
         String sql = "SELECT * FROM user ORDER BY name";
         List<User> users = new ArrayList<>();
