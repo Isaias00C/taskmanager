@@ -13,7 +13,15 @@ import com.irede.java.repository.UserRepository;
 public class UserService {
     public static final String ALL = "Todos";
 
-    private final UserRepository repo = new UserRepository();
+    private final UserRepository repo;
+
+    public UserService() {
+        this(new UserRepository());
+    }
+
+    public UserService(UserRepository repo) {
+        this.repo = repo;
+    }
 
     /** Nome do usuário, ou "Todos" quando o id é nulo ou não existe mais. */
     public String getName(Integer id) {

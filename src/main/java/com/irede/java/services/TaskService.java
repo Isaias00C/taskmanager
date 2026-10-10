@@ -10,8 +10,17 @@ import com.irede.java.models.TaskStatus;
 import com.irede.java.repository.TaskRepository;
 
 public class TaskService{
-    private final TaskRepository repo = new TaskRepository();
-    private final UserService userService = new UserService();
+    private final TaskRepository repo;
+    private final UserService userService;
+
+    public TaskService() {
+        this(new TaskRepository(), new UserService());
+    }
+
+    public TaskService(TaskRepository repo, UserService userService) {
+        this.repo = repo;
+        this.userService = userService;
+    }
 
     public Task createTask(Integer assignTo, String title, String description){
         InvalidTaskValidator.validate(assignTo, title, description);
