@@ -1,0 +1,6 @@
+ #!/bin/sh
+  echo "Rodando testes antes do push..."
+  mvn -B -q test || {
+    echo "Testes falharam. Push cancelado."
+    exit 1
+  }
