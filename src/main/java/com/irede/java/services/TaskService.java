@@ -61,6 +61,10 @@ public class TaskService{
         repo.update(task);
     }
 
+    public void deleteTask(Task task) {
+        repo.delete(task);
+    }
+
     public List<Task> getAllTasks(){
         return repo.findAll();
     }

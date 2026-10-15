@@ -150,8 +150,16 @@ public class POController {
     @FXML
     private void handleDeleteTask() {
         Task selected = taskTable.getSelectionModel().getSelectedItem();
-        if (selected != null){
-            tasks.remove(selected);
+
+        try {
+            if (selected != null){
+                tasks.remove(selected);
+                taskService.deleteTask(selected);
+                taskTable.refresh();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
