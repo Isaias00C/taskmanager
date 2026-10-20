@@ -22,15 +22,15 @@ public class TaskStatusTest {
         assertEquals(TaskStatus.EM_ANDAMENTO, resultado);
     }
 
-    @ParameterizedTest
-    @EnumSource(TaskStatus.class)
+    @ParameterizedTest // são testes que recebem parâmetro na função, diferente do @Test que não recebe parâmetro
+    @EnumSource(TaskStatus.class) // vai servir como parâmetro para a função, roda uma vez para NAO_INICIADO, EM_ANDAMENTO, CONCLUIDO. Se adicionar um novo valor ao enum eu não preciso alterar o teste
     void fromLabel_labelDeCadaStatus_fazOIdaEVolta(TaskStatus status) {
         assertEquals(status, TaskStatus.fromLabel(status.getLabel()));
     }
 
     @ParameterizedTest
-    @NullSource
-    @ValueSource(strings = {"", "desconhecido", "em andamento", "CONCLUIDA"})
+    @NullSource // o @ValueSource vai servir como valores para o parâmetro do teste, mas ele não passa null como valor, ele tem um annotation próprio para isso
+    @ValueSource(strings = {"", "desconhecido", "em andamento", "CONCLUIDA"}) // lista de valores que serão passados como parâmetro para o teste. Ou seja, o teste rodará 5 vezes (null + 4 ‘strings’)
     void fromLabel_labelInvalido_retornaNaoIniciada(String label) {
         assertEquals(TaskStatus.NAO_INICIADA, TaskStatus.fromLabel(label));
     }

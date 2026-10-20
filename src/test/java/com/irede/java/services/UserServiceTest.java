@@ -67,7 +67,7 @@ class UserServiceTest {
     }
 
     @ParameterizedTest
-    @NullAndEmptySource
+    @NullAndEmptySource // mesma ideia o @NullSource, mas agora passando null e empty como valores para o parâmetro da função
     @ValueSource(strings = {"   "})
     void register_nomeVazio_lancaAuthException(String nome) {
         assertThrows(AuthException.class,
